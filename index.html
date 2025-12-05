@@ -21,7 +21,6 @@
     <style>
         :root {
             --vtc-red: #b30000;
-            /* VTC Red */
             --text-color: #333;
             --bg-gray: #f7f7f7;
             --link-blue: #0056b3;
@@ -144,7 +143,6 @@
         .social-sidebar {
             position: sticky;
             top: 80px;
-            /* Adjusted for sticky header */
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -325,6 +323,110 @@
             color: var(--vtc-red);
         }
 
+        /* Home View Styles */
+        .hero-post {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .hero-post img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        .hero-title {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+            padding: 20px;
+            color: white;
+            border-bottom-left-radius: 4px;
+            border-bottom-right-radius: 4px;
+        }
+
+        .hero-title a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .hero-title a:hover {
+            text-decoration: underline;
+        }
+
+        .sub-featured-item {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .sub-featured-item img {
+            width: 120px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        .sub-featured-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        .sub-featured-title a {
+            text-decoration: none;
+            color: #333;
+        }
+
+        .sub-featured-title a:hover {
+            color: var(--vtc-red);
+        }
+
+        .latest-item {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 20px;
+        }
+
+        .latest-item img {
+            width: 240px;
+            height: 160px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        .latest-content h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .latest-content h3 a {
+            text-decoration: none;
+            color: #333;
+        }
+
+        .latest-content h3 a:hover {
+            color: var(--vtc-red);
+        }
+
+        .latest-desc {
+            font-size: 0.95rem;
+            color: #555;
+            line-height: 1.5;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
         @media (max-width: 768px) {
             .social-sidebar {
                 flex-direction: row;
@@ -336,6 +438,19 @@
             .article-title {
                 font-size: 1.8rem;
             }
+
+            .hero-post img {
+                height: 250px;
+            }
+
+            .latest-item {
+                flex-direction: column;
+            }
+
+            .latest-item img {
+                width: 100%;
+                height: auto;
+            }
         }
     </style>
 </head>
@@ -346,7 +461,7 @@
     <div class="vtc-top-bar">
         <div class="container d-flex justify-content-between align-items-center">
             <div class="d-flex align-items-center">
-                <a href="#" class="vtc-logo">
+                <a href="javascript:void(0)" onclick="goHome()" class="vtc-logo">
                     <img src="https://vtcnews.vn/Content/pc/theme/video/images/logo_video_tv.png" alt="VTC News"
                         style="height: 40px;">
                 </a>
@@ -365,7 +480,7 @@
             <div class="nav-container">
                 <!-- VTC Navigation -->
                 <nav class="vtc-nav">
-                    <a href="#" class="active"><i class="fas fa-home"></i></a>
+                    <a href="javascript:void(0)" onclick="goHome()" class="active"><i class="fas fa-home"></i></a>
                     <a href="#">Thời sự</a>
                     <a href="#">Kinh tế</a>
                     <a href="#">Thể thao</a>
@@ -389,14 +504,77 @@
 
     <!-- Main Content -->
     <div class="container main-container mb-5">
+
+        <!-- Loading Spinner -->
         <div id="loading" class="text-center py-5">
             <div class="spinner-border text-danger" role="status">
                 <span class="visually-hidden">Loading...</span>
             </div>
-            <p class="mt-2 text-muted">Đang tải bài viết...</p>
+            <p class="mt-2 text-muted">Đang tải dữ liệu...</p>
         </div>
 
-        <div id="content-wrapper" class="row d-none">
+        <!-- HOME VIEW -->
+        <div id="home-view" class="d-none">
+            <div class="row mb-4">
+                <!-- Hero Section -->
+                <div class="col-md-8">
+                    <div id="hero-post" class="hero-post">
+                        <!-- Injected via JS -->
+                    </div>
+                </div>
+                <!-- Sub-featured -->
+                <div class="col-md-4">
+                    <div class="sidebar-title">Đáng chú ý</div>
+                    <div id="sub-featured-list">
+                        <!-- Injected via JS -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <!-- Latest News -->
+                <div class="col-md-8">
+                    <h3 class="sidebar-title" style="border-bottom: 2px solid #b30000; color: #b30000;">Tin mới nhất
+                    </h3>
+                    <div id="latest-news-list">
+                        <!-- Injected via JS -->
+                    </div>
+                </div>
+
+                <!-- Sidebar (Shared) -->
+                <div class="col-md-4">
+                    <div class="right-sidebar">
+                        <div class="mb-4">
+                            <h5 class="sidebar-title">Khám phá thêm</h5>
+                            <div class="tags-cloud">
+                                <a href="#" class="tag-item">Màu sắc 2025</a>
+                                <a href="#" class="tag-item">Trang trí nhà</a>
+                                <a href="#" class="tag-item">Phong thủy</a>
+                                <a href="#" class="tag-item">Sơn nội thất</a>
+                                <a href="#" class="tag-item">Xu hướng</a>
+                                <a href="#" class="tag-item">Dulux Ambiance</a>
+                            </div>
+                        </div>
+
+                        <div class="mb-4 text-center bg-white p-3 border">
+                            <p class="text-muted small mb-1">Quảng cáo</p>
+                            <img src="https://via.placeholder.com/300x250?text=Quảng+Cáo+Sơn" alt="Ads"
+                                class="img-fluid">
+                        </div>
+
+                        <div>
+                            <h5 class="sidebar-title">Xem nhiều</h5>
+                            <div id="most-viewed-list-home">
+                                <!-- Injected via JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DETAIL VIEW -->
+        <div id="detail-view" class="row d-none">
             <!-- Left Sidebar (Social) -->
             <div class="col-md-1 d-none d-md-block">
                 <div class="social-sidebar">
@@ -411,7 +589,8 @@
             <div class="col-md-7">
                 <nav aria-label="breadcrumb" class="mb-3">
                     <ol class="breadcrumb small text-uppercase fw-bold">
-                        <li class="breadcrumb-item"><a href="#" class="text-decoration-none text-danger">Trang chủ</a>
+                        <li class="breadcrumb-item"><a href="javascript:void(0)" onclick="goHome()"
+                                class="text-decoration-none text-danger">Trang chủ</a>
                         </li>
                         <li class="breadcrumb-item"><a href="#" class="text-decoration-none text-danger">Đời sống</a>
                         </li>
@@ -464,7 +643,7 @@
 
                     <div>
                         <h5 class="sidebar-title">Xem nhiều</h5>
-                        <div id="most-viewed-list">
+                        <div id="most-viewed-list-detail">
                             <!-- Items injected via JS -->
                         </div>
                     </div>
@@ -475,7 +654,7 @@
         <div id="error-message" class="text-center py-5 d-none">
             <h3 class="text-danger">Không tìm thấy bài viết!</h3>
             <p>Vui lòng kiểm tra lại đường dẫn.</p>
-            <a href="../community.html" class="btn btn-danger mt-3">Quay lại trang chủ</a>
+            <a href="javascript:void(0)" onclick="goHome()" class="btn btn-danger mt-3">Quay lại trang chủ</a>
         </div>
     </div>
 
@@ -522,14 +701,140 @@
             return urlParams.get('id');
         }
 
-        // Load Post
-        async function loadPost() {
-            const postId = getIdFromUrl();
+        // Expose goHome to global scope
+        window.goHome = function () {
+            const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+            window.history.pushState({ path: newUrl }, '', newUrl);
+            init();
+        }
 
-            if (!postId) {
-                loadLatestPost();
-                return;
+        // Handle Back/Forward buttons
+        window.onpopstate = function (event) {
+            init();
+        };
+
+        // Initialize
+        async function init() {
+            const postId = getIdFromUrl();
+            if (postId) {
+                await loadPost(postId);
+            } else {
+                await loadHome();
             }
+        }
+
+        async function loadHome() {
+            document.getElementById('loading').classList.remove('d-none');
+            document.getElementById('home-view').classList.add('d-none');
+            document.getElementById('detail-view').classList.add('d-none');
+            document.getElementById('error-message').classList.add('d-none');
+
+            try {
+                const q = query(collection(db, "posts"), orderBy("createdAt", "desc"), limit(10));
+                const snapshot = await getDocs(q);
+                const posts = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+
+                if (posts.length > 0) {
+                    renderHero(posts[0]);
+                    renderSubFeatured(posts.slice(1, 4));
+                    renderLatest(posts.slice(4));
+                    loadMostViewed('home');
+                }
+
+                document.getElementById('loading').classList.add('d-none');
+                document.getElementById('home-view').classList.remove('d-none');
+                document.title = "VTC News - Hơi thở cuộc sống";
+
+            } catch (error) {
+                console.error("Error loading home:", error);
+                document.getElementById('loading').classList.add('d-none');
+            }
+        }
+
+        function renderHero(post) {
+            const slug = createSlug(post.title);
+            const url = `?p=${slug}-${post.id}`;
+            // Extract first image
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = post.content;
+            const img = tempDiv.querySelector('img');
+            const imgSrc = img ? img.src : 'https://via.placeholder.com/800x400?text=VTC+News';
+
+            const html = `
+                <a href="${url}" onclick="event.preventDefault(); navigateTo('${url}')">
+                    <img src="${imgSrc}" alt="${post.title}">
+                    <div class="hero-title">
+                        ${post.title}
+                    </div>
+                </a>
+            `;
+            document.getElementById('hero-post').innerHTML = html;
+        }
+
+        function renderSubFeatured(posts) {
+            const container = document.getElementById('sub-featured-list');
+            container.innerHTML = '';
+            posts.forEach(post => {
+                const slug = createSlug(post.title);
+                const url = `?p=${slug}-${post.id}`;
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = post.content;
+                const img = tempDiv.querySelector('img');
+                const imgSrc = img ? img.src : 'https://via.placeholder.com/120x80?text=News';
+
+                const html = `
+                    <div class="sub-featured-item">
+                        <a href="${url}" onclick="event.preventDefault(); navigateTo('${url}')">
+                            <img src="${imgSrc}" alt="${post.title}">
+                        </a>
+                        <div class="sub-featured-title">
+                            <a href="${url}" onclick="event.preventDefault(); navigateTo('${url}')">${post.title}</a>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += html;
+            });
+        }
+
+        function renderLatest(posts) {
+            const container = document.getElementById('latest-news-list');
+            container.innerHTML = '';
+            posts.forEach(post => {
+                const slug = createSlug(post.title);
+                const url = `?p=${slug}-${post.id}`;
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = post.content;
+                const img = tempDiv.querySelector('img');
+                const imgSrc = img ? img.src : 'https://via.placeholder.com/240x160?text=News';
+                const textContent = tempDiv.textContent || tempDiv.innerText || "";
+                const desc = textContent.substring(0, 150) + "...";
+
+                const html = `
+                    <div class="latest-item">
+                        <a href="${url}" onclick="event.preventDefault(); navigateTo('${url}')" class="me-3">
+                            <img src="${imgSrc}" alt="${post.title}">
+                        </a>
+                        <div class="latest-content">
+                            <h3><a href="${url}" onclick="event.preventDefault(); navigateTo('${url}')">${post.title}</a></h3>
+                            <div class="latest-desc">${desc}</div>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += html;
+            });
+        }
+
+        // Global navigation handler
+        window.navigateTo = function (url) {
+            window.history.pushState({ path: url }, '', url);
+            init();
+        }
+
+        async function loadPost(postId) {
+            document.getElementById('loading').classList.remove('d-none');
+            document.getElementById('home-view').classList.add('d-none');
+            document.getElementById('detail-view').classList.add('d-none');
+            document.getElementById('error-message').classList.add('d-none');
 
             try {
                 const docRef = doc(db, "posts", postId);
@@ -539,7 +844,7 @@
                     const post = docSnap.data();
                     renderPost(post);
 
-                    // Canonicalize URL: If accessed via ID or wrong slug, update to correct slug
+                    // Canonicalize URL
                     const correctSlug = `${createSlug(post.title)}-${docSnap.id}`;
                     const currentP = new URLSearchParams(window.location.search).get('p');
 
@@ -547,6 +852,8 @@
                         const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?p=' + correctSlug;
                         window.history.replaceState({ path: newUrl }, '', newUrl);
                     }
+
+                    loadMostViewed('detail');
 
                 } else {
                     document.getElementById('error-message').classList.remove('d-none');
@@ -557,41 +864,15 @@
                 document.getElementById('error-message').classList.remove('d-none');
                 document.getElementById('loading').classList.add('d-none');
             }
-
-            loadMostViewed();
-        }
-
-        async function loadLatestPost() {
-            try {
-                const q = query(collection(db, "posts"), orderBy("createdAt", "desc"), limit(1));
-                const querySnapshot = await getDocs(q);
-                if (!querySnapshot.empty) {
-                    const doc = querySnapshot.docs[0];
-                    const post = doc.data();
-                    renderPost(post);
-
-                    // Update URL
-                    const slug = createSlug(post.title);
-                    const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?p=' + slug + '-' + doc.id;
-                    window.history.pushState({ path: newUrl }, '', newUrl);
-                } else {
-                    document.getElementById('error-message').classList.remove('d-none');
-                    document.getElementById('loading').classList.add('d-none');
-                }
-            } catch (error) {
-                console.error("Error:", error);
-            }
-            loadMostViewed();
         }
 
         function renderPost(post) {
             document.getElementById('loading').classList.add('d-none');
-            document.getElementById('content-wrapper').classList.remove('d-none');
+            document.getElementById('detail-view').classList.remove('d-none');
 
             document.title = post.title + " - VTC News";
             document.getElementById('post-title').textContent = post.title;
 
-            // Generate Sapo (First paragraph or first 150 chars)
             const tempDiv = document.createElement('div');
             tempDiv.innerHTML = post.content;
             const textContent = tempDiv.textContent || tempDiv.innerText || "";
@@ -600,14 +881,29 @@
             document.getElementById('post-date').textContent = post.createdAt ? new Date(post.createdAt.seconds * 1000).toLocaleString('vi-VN', { weekday: 'long', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }) : 'Vừa xong';
             document.getElementById('post-author').textContent = post.authorName || "Ban Biên Tập";
 
-            // Content
-            document.getElementById('post-content').innerHTML = post.content;
+            // FIX: Handle relative links in content
+            const contentDiv = document.createElement('div');
+            contentDiv.innerHTML = post.content;
+            const links = contentDiv.querySelectorAll('a');
+            links.forEach(link => {
+                const href = link.getAttribute('href');
+                if (href && !href.startsWith('http') && !href.startsWith('//') && !href.startsWith('#')) {
+                    // It's a relative link, prepend the main domain
+                    link.setAttribute('href', 'https://dulux-marketing.vercel.app/' + href.replace(/^\//, ''));
+                    link.setAttribute('target', '_blank'); // Open in new tab
+                }
+            });
+
+            document.getElementById('post-content').innerHTML = contentDiv.innerHTML;
         }
 
-        async function loadMostViewed() {
-            const list = document.getElementById('most-viewed-list');
+        async function loadMostViewed(context) {
+            const listId = context === 'home' ? 'most-viewed-list-home' : 'most-viewed-list-detail';
+            const list = document.getElementById(listId);
+            if (!list) return;
+
+            list.innerHTML = '';
             try {
-                // Just get 5 random/latest posts for "Most Viewed" simulation
                 const q = query(collection(db, "posts"), orderBy("createdAt", "desc"), limit(5));
                 const querySnapshot = await getDocs(q);
 
@@ -616,12 +912,13 @@
                     const p = doc.data();
                     const color = index === 1 ? '#b30000' : (index === 2 ? '#d65a18' : (index === 3 ? '#d69e18' : '#ddd'));
                     const slug = createSlug(p.title);
+                    const url = `?p=${slug}-${doc.id}`;
 
                     list.innerHTML += `
                         <div class="most-viewed-item">
                             <div class="most-viewed-number" style="color: ${color}">${index}</div>
                             <div class="most-viewed-title">
-                                <a href="?p=${slug}-${doc.id}">${p.title}</a>
+                                <a href="${url}" onclick="event.preventDefault(); navigateTo('${url}')">${p.title}</a>
                             </div>
                         </div>
                     `;
@@ -632,7 +929,8 @@
             }
         }
 
-        loadPost();
+        // Start
+        init();
     </script>
 
 </body>
